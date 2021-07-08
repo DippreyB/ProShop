@@ -23,7 +23,7 @@ const CartScreen = ({match, location, history}) => {
     }
 
     const checkOutHandler = () => {
-        history.push('/login/redirect=shipping')
+        history.push('/login/?redirect=/shipping')
     }
 
     return (
@@ -70,7 +70,7 @@ const CartScreen = ({match, location, history}) => {
                             ${cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}
                         </ListGroup.Item>
                         <ListGroup.Item>
-                            <Button type='button' className='btn-block' diabled={cartItems.length === 0 } onClick={checkOutHandler}>
+                            <Button type='button' className='btn-block' disabled={cartItems.length === 0 } onClick={checkOutHandler}>
                                 Proceed to Checkout
                             </Button>
                         </ListGroup.Item>
