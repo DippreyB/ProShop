@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react'
+import axios from 'axios'
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -22,8 +23,18 @@ const OrderScreen = ({match}) => {
     const {order, loading, error} = orderDetails
 
     useEffect(() => {
+        const addPaypalScript = async () => {
+            const {data: clientId} = await axios.get('/api/config/paypal')
+            console.log(clientId)
+        }
+
+        addPaypalScript()
+
+
+        if(!order || order._id !== orderId)
         dispatch(getOrderDetails(orderId))
-    },[])
+
+    },[dispatch,order, orderId])
 
 
     return loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : 
@@ -35,16 +46,24 @@ const OrderScreen = ({match}) => {
                         <ListGroup.Item>
                             <h2>Shipping</h2>
                             <p>
-                                <strong>Address:</strong>
+                            <strong>Name: </strong>{order.user.name}
+                            </p>
+                            <p>
+                            <strong>Email: </strong><a href={`mailto:${order.user.email}`}>{order.user.email}</a>
+                            </p>
+                            <p>
+                                <strong>Address: </strong>
                                 {order.shippingAddress.address},{' '}{order.shippingAddress.city},{' '}{order.shippingAddress.postalCode},{' '}{order.shippingAddress.country}
                             </p>
+                            {order.isDelivered ? <Message variant='success'>Delivered on {order.deliveredAt}</Message> : <Message variant='danger'>Not Delivered</Message>}
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <h2>Payment Method</h2>
                             <p>
                                 <strong>Method: </strong>
-                                {order.paymentMethod.paymentMethod}
+                                {order.paymentMethod}
                             </p>
+                            {order.isPaid ? <Message variant='success'>Paid on {order.paidAt}</Message> : <Message variant='danger'>Not Paid</Message>}
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <h2>Order Items</h2>
