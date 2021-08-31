@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+//eslint-disable-next-line
 import { propTypes } from 'react-bootstrap/esm/Image';
 
 const Rating = ({value, text, color}) => {
