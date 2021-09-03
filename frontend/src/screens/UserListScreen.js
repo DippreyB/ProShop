@@ -20,11 +20,13 @@ const UserListScreen = ({history}) => {
             dispatch(getUsers())
         else
             history.push('/login')
-    }, [dispatch, history])
+    }, [dispatch, history, userInfo])
 
-    const deleteHandler = (userId) => {
-        dispatch(deleteUser(userId))
-        //dispatch(getUsers())
+    const deleteHandler = async (userId) => {
+        if(window.confirm('Are you sure?')) {
+        await dispatch(deleteUser(userId))
+        dispatch(getUsers())
+        }
     }
 
     return (
