@@ -32,7 +32,7 @@ const Header = () => {
                                 <NavDropdown.Item>Profile</NavDropdown.Item>
                             </LinkContainer>
                             {userInfo.isAdmin &&
-                                <LinkContainer to='/users'>
+                                <LinkContainer to='/admin/users'>
                                     <NavDropdown.Item>Users</NavDropdown.Item>
                                 </LinkContainer>
                             }
